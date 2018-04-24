@@ -79,13 +79,17 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="WNDdan">
-<meta property="og:url" content="http://blog.nmap.run/index.html">
+<meta name="description" content="raMozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36 OPR/26.0.1656.60Opera/8.0 (Windows NT 5.1; U; en)Mozilla/5.0 (Windows NT 5.1; U; en; rv:1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UserAgent">
+<meta property="og:url" content="http://blog.nmap.run/2018/04/24/User Agent/index.html">
 <meta property="og:site_name" content="WNDdan">
+<meta property="og:description" content="raMozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36 OPR/26.0.1656.60Opera/8.0 (Windows NT 5.1; U; en)Mozilla/5.0 (Windows NT 5.1; U; en; rv:1">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-24T13:48:50.668Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="WNDdan">
+<meta name="twitter:title" content="UserAgent">
+<meta name="twitter:description" content="raMozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36 OPR/26.0.1656.60Opera/8.0 (Windows NT 5.1; U; en)Mozilla/5.0 (Windows NT 5.1; U; en; rv:1">
 
 
 
@@ -115,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://blog.nmap.run/"/>
+  <link rel="canonical" href="http://blog.nmap.run/2018/04/24/User Agent/"/>
 
 
 
 
 
-  <title>WNDdan</title>
+  <title>UserAgent | WNDdan</title>
   
 
 
@@ -140,8 +144,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -244,290 +247,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.nmap.run/2018/04/24/SQL注入/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wnddan">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="WNDdan">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/24/SQL注入/" itemprop="url">注入笔记</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-24T21:49:50+08:00">
-                2018-04-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>#SQL注入 #<br>[TOC]</p>
-<p>##盲注函数与方法##</p>
-<p>###mid()函数###<br>    MID(column_name,start[,length])<br>    <strong>例子:<br>    (1)MID(DATABASE(),1,1)&gt;’a’,查看数据库名第一位，MID(DATABASE(),2,1)查看数据库名第二位，依次查看各位字符。<br>    (2)MID((SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE T table_schema=0xxxxxxx LIMIT 0,1),1,1)&gt;’a’</strong></p>
-<p>###substr()函数###<br>    Substr()和substring()函数实现的功能是一样的，均为截取字符串。</p>
-<pre><code>string substring(string, start, length)
-
-string substr(string, start, length)
-</code></pre><p>###left()函数###<br>    Left()得到字符串左部指定个数的字符</p>
-<pre><code>Left ( string, n )        string为要截取的字符串，n为长度。
-
-Sql用例：
-
-(1) left(database(),1)&gt;’a’,查看数据库名第一位，left(database(),2)&gt;’ab’,查看数据库名前二位。
-
-(2) 同样的string可以为自行构造的sql语句。
-</code></pre><p>###ord()###<br>返回字符的ASCII码 和ascii相对</p>
-<p>###正则表达式###<br>    select <em> from users where id=1 and 1=(if((user() regexp ‘^r’),1,0));<br>    select </em> from users where id=1 and 1=(user() regexp’^ri’);</p>
-<p>###like 匹配###<br>    select user() like ‘ro%’</p>
-<p>##基于报错的盲注##</p>
-<p>###group by 与 floor rand 函数的报错###</p>
-<p>####构造 payload 让信息通过错误提示回显出来####<br>    Select 1,count(<em>),concat(0x3a,0x3a,(select user()),0x3a,0x3a,floor(rand(0)</em>2)) a from information_schema.columns group by a;</p>
-<h5 id="要确保三点"><a href="#要确保三点" class="headerlink" title="要确保三点"></a>要确保三点</h5><ol>
-<li>concat计数</li>
-<li>floor取得0或1 进行数据的重复 rand()不行就rand(0)</li>
-<li><p>group by分组<br>可精简成</p>
-<p> select count(<em>) from information_schema.tables group by concat(version(), floor(rand(0)</em>2))</p>
-</li>
-</ol>
-<p><a href="http://www.cnblogs.com/xdans/p/5412468.html" title="原理" target="_blank" rel="noopener">http://www.cnblogs.com/xdans/p/5412468.html</a></p>
-<p>###另一些函数的报错###<br>extractvalue：</p>
-<pre><code>extractvalue(1,concat(0x5c,(select 1),0x5c,1))
-</code></pre><p>updatexml：<br>    updatexml(1,concat(0x5c,(select 1),0x5c,1),0)</p>
-<p>重复定义：</p>
-<pre><code>select * from (select NAME_CONST(version(),1),NAME_CONST(version(),1))x;
-</code></pre><p>exp超过范围：    </p>
-<pre><code>select exp(~(select * FROM(SELECT USER())a))    
-我复现的时候没有成功
-</code></pre><p>bigint超过范围：</p>
-<pre><code>select !(select * from (select user())x) -（ps:这是减号） ~0
-复现没有成功
-</code></pre><p>###延时盲注###</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.nmap.run/2018/04/24/随便扯淡/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wnddan">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="WNDdan">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/24/随便扯淡/" itemprop="url">无聊</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-24T21:49:20+08:00">
-                2018-04-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>恍惚惚的好几个月，感觉不到自己的进步，甚至还是有些堕落。<br>莫名其妙的失落感一直冲击着自己，或许真的是寂寞太久了吧。<br>整个人也都显得萎靡不振<br>我也不知道自己到底想要什么，也不知道该做出怎样的改变。只是简单的感觉现在的生活我不满意，简单的感觉平凡足以杀死我。<br>想要不平凡<br>想要改变<br>却像弱智一样沉迷一些毫无价值的事情上<br>我也并不是对技术感觉到狂热<br>只是感觉 它能带给我异同感<br>懂常人之不能 恰恰是会给予很大的成就感吧</p>
-<p>make a big good</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
 
   
 
@@ -557,9 +279,7 @@ Sql用例：
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/24/User Agent/" itemprop="url">UserAgent</a></h1>
+          <h1 class="post-title" itemprop="name headline">UserAgent</h1>
         
 
         <div class="post-meta">
@@ -609,9 +329,7 @@ Sql用例：
       
 
       
-        
-          
-            <p>ra<br>Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36 OPR/26.0.1656.60<br>Opera/8.0 (Windows NT 5.1; U; en)<br>Mozilla/5.0 (Windows NT 5.1; U; en; rv:1.8.1) Gecko/20061208 Firefox/2.0.0 Opera 9.50<br>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; en) Opera 9.50</p>
+        <p>ra<br>Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36 OPR/26.0.1656.60<br>Opera/8.0 (Windows NT 5.1; U; en)<br>Mozilla/5.0 (Windows NT 5.1; U; en; rv:1.8.1) Gecko/20061208 Firefox/2.0.0 Opera 9.50<br>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; en) Opera 9.50</p>
 <p>Firefox<br>Mozilla/5.0 (Windows NT 6.1; WOW64; rv:34.0) Gecko/20100101 Firefox/34.0<br>Mozilla/5.0 (X11; U; Linux x86_64; zh-CN; rv:1.9.2.10) Gecko/20100922 Ubuntu/10.10 (maverick) Firefox/3.6.10</p>
 <p>Safari<br>Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/534.57.2 (KHTML, like Gecko) Version/5.1.7 Safari/534.57.2</p>
 <p>chrome<br>Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36<br>Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11<br>Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/534.16 (KHTML, like Gecko) Chrome/10.0.648.133 Safari/534.16</p>
@@ -639,8 +357,6 @@ Sql用例：
 <p>UCOpenwave<br>Openwave/ UCWEB7.0.2.37/28/999</p>
 <p>UC Opera<br>Mozilla/4.0 (compatible; MSIE 6.0; ) Opera/UCWEB7.0.2.37/28/999</p>
 
-          
-        
       
     </div>
     
@@ -657,12 +373,28 @@ Sql用例：
       
 
       
+      
+      
 
       
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/24/随便扯淡/" rel="prev" title="无聊">
+                无聊 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
 
       
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -672,10 +404,11 @@ Sql用例：
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -683,6 +416,10 @@ Sql用例：
 
 
           
+
+  
+
+
 
         </div>
         
@@ -879,6 +616,10 @@ Sql用例：
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
